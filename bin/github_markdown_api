@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'github_markdown_api'
+
+puts GitHubMarkdownAPI::Client.new.raw(ARGF.read)
