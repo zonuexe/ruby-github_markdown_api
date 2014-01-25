@@ -2,4 +2,4 @@
 
 require 'github_markdown_api'
 
-puts GitHubMarkdownAPI::Client.new.raw(ARGF.read)
+puts GitHubMarkdownAPI::Raw::render(ARGF.read) rescue abort $!.inspect

@@ -104,4 +104,8 @@ class GitHubMarkdownAPI::APIClient
 
     return  klass.build(param)
   end
+
+  def self.render (markdown)
+    return self.new.render markdown
+  end
 end
