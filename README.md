@@ -21,6 +21,8 @@ Or install it yourself as:
 Usage
 -----
 
+### Raw API
+
 In ruby script:
 
 ```ruby
@@ -30,7 +32,7 @@ md = <<EOM
 AWESOME SCRIPT
 ==============
 
-It's a wonderful markup languages!
+It's a wonderful markup language!
 
  * Markdown
  * reStructuredText
@@ -44,7 +46,7 @@ puts html
 # <h1>
 # <a name="awesome-script" class="anchor" href="#awesome-script"><span class="octicon octicon-link"></span></a>AWESOME SCRIPT</h1>
 # 
-# <p>It's a wonderful markup languages!</p>
+# <p>It's a wonderful markup language!</p>
 # 
 # <ul>
 # <li>Markdown</li>
@@ -59,7 +61,7 @@ In command-line:
 AWESOME SCRIPT
 ==============
 
-It's a wonderful markup languages!
+It's a wonderful markup language!
 
  * Markdown
  * reStructuredText
@@ -69,13 +71,17 @@ It's a wonderful markup languages!
 <h1>
 <a name="awesome-script" class="anchor" href="#awesome-script"><span class="octicon octicon-link"></span></a>AWESOME SCRIPT</h1>
 
-<p>It's a wonderful markup languages!</p>
+<p>It's a wonderful markup language!</p>
 
 <ul>
 <li>Markdown</li>
 <li>reStructuredText</li>
 </ul>
 ```
+
+### Attr API
+
+
 
 ### Advansed
 

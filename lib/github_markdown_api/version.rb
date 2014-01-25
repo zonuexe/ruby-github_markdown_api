@@ -1,3 +1,5 @@
+# Namespace of github_markdown_api gem
 module GitHubMarkdownAPI
-  VERSION = '0.0.1'
+  # Version number of github_markdown_api gem
+  VERSION = '0.0.2'
 end
