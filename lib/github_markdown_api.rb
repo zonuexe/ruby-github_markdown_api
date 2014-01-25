@@ -1,5 +1,5 @@
 require 'github_markdown_api/version'
-require 'github_markdown_api/client'
+require 'github_markdown_api/raw'
 
 module GitHubMarkdownAPI
   DEFAULT_SCHEME       = :https
