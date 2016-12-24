@@ -15,6 +15,6 @@ class GitHubMarkdownAPI::Raw < GitHubMarkdownAPI::APIClient
     post = Net::HTTP::Post.new(raw_uri, header)
     post.body = markdown
 
-    return request(raw_uri, post)
+    request(raw_uri, post)
   end
 end

@@ -42,13 +42,14 @@ class GitHubMarkdownAPI::APIClient
     @port         = option[:port]
     @endpoints    = option[:endpoints].to_hash
     @content_type = option[:content_type].to_s
-    return self
+
+    self
   end
 
   # Returns hash of default options
   # @return [Hash]
   def default_options
-    return {
+    {
       scheme:       GitHubMarkdownAPI::DEFAULT_SCHEME,
       host:         GitHubMarkdownAPI::DEFAULT_HOST,
       port:         GitHubMarkdownAPI::DEFAULT_PORT,
@@ -74,7 +75,7 @@ class GitHubMarkdownAPI::APIClient
 
     case response
     when Net::HTTPSuccess
-      return response.body
+      response.body
     else
       raise RuntimeError, response
     end
@@ -102,10 +103,10 @@ class GitHubMarkdownAPI::APIClient
     }
     param[:port] = @port || 443
 
-    return  klass.build(param)
+    klass.build(param)
   end
 
   def self.render (markdown)
-    return self.new.render markdown
+    new.render markdown
   end
 end
