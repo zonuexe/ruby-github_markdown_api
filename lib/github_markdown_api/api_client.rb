@@ -1,6 +1,5 @@
 require 'uri'
 require 'net/https'
-require 'github_markdown_api/version'
 
 # Abstract class of API Clients
 # @abstract
@@ -10,7 +9,7 @@ class GitHubMarkdownAPI::APIClient
   end
 
   # @param [Hash,String] args
-  def initialize (args = {}, sub_args = {})
+  def initialize(args = {}, sub_args = {})
     case args
     when Hash
       set_option(args)
