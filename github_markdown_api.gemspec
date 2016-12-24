@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tadsan@zonu.me"]
   spec.description   = %q{GitHub Markdown API client and command-line tool}
   spec.summary       = %q{}
-  spec.homepage      = "http://dt.zonu.me/"
+  spec.homepage      = "https://github.com/zonuexe/ruby-github_markdown_api"
   spec.licenses      = %w[LGPLv3 NYSL]
 
   spec.files         = `git ls-files`.split($/)
