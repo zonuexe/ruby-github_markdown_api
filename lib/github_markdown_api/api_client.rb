@@ -5,11 +5,15 @@ require 'github_markdown_api/version'
 # Abstract class of API Clients
 # @abstract
 class GitHubMarkdownAPI::APIClient
+  def self.render(markdown)
+    new.render(markdown)
+  end
+
   # @param [Hash,String] args
   def initialize (args = {}, sub_args = {})
     case args
     when Hash
-      set_option args
+      set_option(args)
     when String
       # pending
     end
@@ -35,15 +39,64 @@ class GitHubMarkdownAPI::APIClient
 
   # @param  [Hash] args
   # @return [self]
-  def set_option (args)
+  def set_option(args)
     option = default_options.merge(args)
-    @scheme       = option[:scheme].intern
-    @host         = option[:host].to_s
-    @port         = option[:port]
-    @endpoints    = option[:endpoints].to_hash
-    @content_type = option[:content_type].to_s
+
+    self.scheme = option[:scheme].to_sym
+    self.host = option[:host].to_s
+    self.port = option[:port]
+    self.endpoints = option[:endpoints].to_h
+    self.content_type = option[:content_type].to_s
 
     self
+  end
+
+  # Renders HTML from Markdown
+  # @param [String] markdown
+  # @abstract
+  def render(markdown)
+    raise NotImplementedError, "#{__method__} is a abstract method."
+  end
+
+  private
+
+  # Requests API
+  # @param  [URI]    raw_uri
+  # @param  [Hash]   request
+  # @return [String]
+  def request(raw_uri, post)
+    http = Net::HTTP.new(raw_uri.host, raw_uri.port)
+
+    if scheme == :https
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    end
+
+    response = http.start { http.request(post) }
+    @last_response = response
+
+    case response
+    when Net::HTTPSuccess
+      response.body
+    else
+      raise RuntimeError, response
+    end
+  end
+
+  # Returns endpoint of API type
+  # @param  [Symbol,#to_sym] type
+  # @return [URI]
+  def endpoint(type)
+    path = endpoints[type.to_sym]
+    scheme_class = URI.scheme_list.fetch(scheme.to_s.upcase)
+
+    param = {
+      host: host,
+      path: path,
+      port: (port || 443)
+    }
+
+    scheme_class.build(param)
   end
 
   # Returns hash of default options
@@ -57,56 +110,5 @@ class GitHubMarkdownAPI::APIClient
       auth:         GitHubMarkdownAPI::DEFAULT_AUTH,
       content_type: GitHubMarkdownAPI::DEFAULT_CONTENT_TYPE,
     }
-  end
-
-  # Requests API
-  # @param  [URI]    raw_uri
-  # @param  [Hash]   request
-  # @return [String]
-  def request (raw_uri, post)
-    http = Net::HTTP.new(raw_uri.host, raw_uri.port)
-    if @scheme == :https
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    end
-
-    response = http.start{ http.request post }
-    @last_response = response
-
-    case response
-    when Net::HTTPSuccess
-      response.body
-    else
-      raise RuntimeError, response
-    end
-  end
-
-  # Renders HTML from Markdown
-  # @param [String] markdown
-  # @abstract
-  def render (markdown)
-    raise NotImplementedError, "#{__method__} is a abstract method."
-  end
-
-  # Returns endpoint of API type
-  # @param  [Symbol,#to_sym] type
-  # @return [URI]
-  def endpoint (type)
-    path  = @endpoints[type.to_sym]
-    klass = case @scheme
-            when :http;  URI::HTTP
-            when :https; URI::HTTPS
-            end
-    param = {
-      host: @host,
-      path: path,
-    }
-    param[:port] = @port || 443
-
-    klass.build(param)
-  end
-
-  def self.render (markdown)
-    new.render markdown
   end
 end
