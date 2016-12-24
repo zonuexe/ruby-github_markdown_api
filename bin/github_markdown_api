@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.expand_path('./../../lib', __FILE__))
+
 require 'github_markdown_api'
 
 puts GitHubMarkdownAPI::Raw::render(ARGF.read) rescue abort $!.inspect
