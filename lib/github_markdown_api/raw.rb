@@ -1,20 +1,17 @@
-require 'uri'
-require 'net/https'
-require 'github_markdown_api/version'
-require 'github_markdown_api/api_client'
-
 # Client implementation of Markdown Raw API
 class GitHubMarkdownAPI::Raw < GitHubMarkdownAPI::APIClient
   # @param  [String] markdown
   # @return [String]
-  def render (markdown)
+  def render(markdown)
     raw_uri = endpoint(:raw)
-    header  = {
+
+    headers = {
       'Content-Type' => @content_type
     }
-    post = Net::HTTP::Post.new(raw_uri, header)
+
+    post = Net::HTTP::Post.new(raw_uri, headers)
     post.body = markdown
 
-    return request(raw_uri, post)
+    request(raw_uri, post)
   end
 end
