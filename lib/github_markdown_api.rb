@@ -1,5 +1,4 @@
 require 'github_markdown_api/version'
-require 'github_markdown_api/raw'
 
 module GitHubMarkdownAPI
   DEFAULT_SCHEME       = :https
@@ -11,4 +10,7 @@ module GitHubMarkdownAPI
   }
   DEFAULT_AUTH         = nil
   DEFAULT_CONTENT_TYPE = 'text/plain'
+
+  autoload :APIClient, 'github_markdown_api/api_client'
+  autoload :Raw, 'github_markdown_api/raw'
 end
