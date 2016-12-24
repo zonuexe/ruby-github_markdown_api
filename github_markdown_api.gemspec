@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{GitHub Markdown API client and command-line tool}
   spec.summary       = %q{}
   spec.homepage      = "https://github.com/zonuexe/ruby-github_markdown_api"
-  spec.licenses      = %w[LGPLv3 NYSL]
+  spec.licenses      = %w[Apache-2.0 NYSL]
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
